@@ -1,10 +1,10 @@
-#  🎨 Circular Color Piker Compose.
+#  🎨 Circular Color Picker Compose 🚀
 
 [![Jitpack](https://jitpack.io/v/honyadew/circular-color-picker-compose.svg)](https://jitpack.io/#honyadew/circular-color-picker-compose)
 
 HarmonyColorPicker - Circular wheel with harmony modes.
 
-## How to get started
+## 🧾 How to
 
 Add it in your root `build.gradle.kts` at the end of repositories:
 ```
@@ -20,11 +20,11 @@ Add the dependency to module `build.gradle.kts`.
 ```
 dependencies {
     ...
-    implementation("com.github.honyadew:circular-color-picker-compose:<version>)
+    implementation("com.github.honyadew:circular-color-picker-compose:<version>")
 }
 ```
 
-## Screnshots
+## 📱 Screnshots
 
 ![Screenshot1v3](https://github.com/HonyaDew/circular-color-picker-compose/assets/116727132/f0def2ea-95fb-43df-b70f-68a4735386b3)
 
@@ -38,10 +38,10 @@ tetradic - 3;
 monochromatic - 4; 
 shades - 4".
 
-## Customization like in Jetpack Compose items
+## 🚀 Customization from Jetpack Compose
 ```kotlin
 HarmonyColorPicker(
-    ...
+    ... 
     colors = ColorPickerDefaults.harmonyColors(wheelBorderColor = Color.Black)
 )
 
@@ -58,7 +58,7 @@ fun harmonyColors(
 ): ColorPickerColors = DefaultColorPickerColors(...)
 ```
 
-## Minimal usage example
+## 📗 Minimal usage example
 
 ```kotlin
 @Composable
@@ -77,7 +77,7 @@ fun AnyComposableFunction() {
 }
 ```
 
-## Full usage example
+## 📕 Full usage example
 
 ```kotlin
 @Composable
@@ -129,3 +129,4 @@ fun AnyComposableFunction(){
     }
 }
 ```
+### Don't forget to star the project if you like it! ⭐ = ❤
