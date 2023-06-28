@@ -1,29 +1,27 @@
 #  🎨 Circular Color Piker Compose.
 
-![Maven Central](/*Link TODO*/)
+[![Jitpack](https://jitpack.io/v/honyadew/circular-color-picker-compose.svg)](https://jitpack.io/#honyadew/circular-color-picker-compose)
 
-HarmonyColorPicker - Circular wheel with harmony modes
-
-Color return count(without selected): 
-none - 0
-complementary - 1
-triadic - 2
-analogous - 2
-tetradic - 3
-monochromatic - 4
-shades - 4
+HarmonyColorPicker - Circular wheel with harmony modes.
 
 ## How to get started
 
-Add the dependency to your `build.gradle` file:
+Add it in your root `build.gradle.kts` at the end of repositories:
 ```
-implementation 'TODO<version>'
+allprojects{
+    repositories {
+        ...
+        maven("https://jitpack.io")
+    }
+}
 ```
-Or
 
-Add the dependency to your `build.gradle.kts` file:
+Add the dependency to module `build.gradle.kts`.
 ```
-implementation("TODO<version>")
+dependencies {
+    ...
+    implementation("com.github.honyadew:circular-color-picker-compose:<version>)
+}
 ```
 
 ## Screnshots
@@ -31,6 +29,34 @@ implementation("TODO<version>")
 ![Screenshot1v3](https://github.com/HonyaDew/circular-color-picker-compose/assets/116727132/f0def2ea-95fb-43df-b70f-68a4735386b3)
 
 ![Screenshot2v3](https://github.com/HonyaDew/circular-color-picker-compose/assets/116727132/90465552-17a8-4a76-850d-83f61439b756)
+Amount of additional colors: 
+"none - 0; 
+complementary - 1; 
+triadic - 2; 
+analogous - 2; 
+tetradic - 3; 
+monochromatic - 4; 
+shades - 4".
+
+## Customization like in Jetpack Compose items
+```kotlin
+HarmonyColorPicker(
+    ...
+    colors = ColorPickerDefaults.harmonyColors(wheelBorderColor = Color.Black)
+)
+
+@Composable
+fun harmonyColors(
+    wheelBorderColor: Color = Color.Transparent,
+    brightnessBarColor: Color = MaterialTheme.colorScheme.primary,
+    primaryMagnifierColor: Color = Color.White,
+    additionalMagnifierColor: Color = primaryMagnifierColor,
+    disabledWheelBorderColor: Color = Color.Transparent,
+    disabledBrightnessBarColor: Color = MaterialTheme.colorScheme.inversePrimary,
+    disabledPrimaryMagnifierColor: Color = Color.Gray,
+    disabledAdditionalMagnifierColor: Color = disabledPrimaryMagnifierColor
+): ColorPickerColors = DefaultColorPickerColors(...)
+```
 
 ## Minimal usage example
 
@@ -51,7 +77,7 @@ fun AnyComposableFunction() {
 }
 ```
 
-## Full Usage example
+## Full usage example
 
 ```kotlin
 @Composable
@@ -103,5 +129,3 @@ fun AnyComposableFunction(){
     }
 }
 ```
-
-This is just a fork other library, here I add a more customization and remove useless colors
