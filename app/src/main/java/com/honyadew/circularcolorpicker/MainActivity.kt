@@ -91,5 +91,15 @@ fun HarmonyViewShow(){
             }
         }
     }
+
+//    val hsvColor2 = remember { mutableStateOf(HsvColor.DEFAULT) }
+//
+//    HarmonyColorPicker(
+//        harmonyMode = ColorHarmonyMode.NONE,
+//        value = hsvColor2.value,
+//        onValueChanged = {newValue ->
+//            hsvColor2.value = newValue
+//        }
+//    )
 }
 

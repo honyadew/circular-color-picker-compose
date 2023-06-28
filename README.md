@@ -2,7 +2,7 @@
 
 ![Maven Central](/*Link TODO*/)
 
-HarmonyColorPicker - Circular wheel with harmony modes (ie complementary, triadic, analogous, shades, monochromatic, tetradic)
+HarmonyColorPicker - Circular wheel with harmony modes
 
 Color return count(without selected): 
 none - 0
@@ -18,8 +18,6 @@ shades - 4
 Add the dependency to your `build.gradle` file:
 ```
 implementation 'TODO<version>'
-
-
 ```
 Or
 
@@ -28,10 +26,29 @@ Add the dependency to your `build.gradle.kts` file:
 implementation("TODO<version>")
 ```
 
-## Usage example
+## Minimal usage example
 
 ```kotlin
+@Composable
+fun AnyComposableFunction() {
+    val hsvColor = remember { mutableStateOf(HsvColor.DEFAULT) }
 
+    HarmonyColorPicker(
+        harmonyMode = ColorHarmonyMode.NONE,
+        value = hsvColor.value,
+        onValueChanged = { newValue ->
+            hsvColor.value = newValue
+        }
+    )
+
+    Box(Modifier.size(64.dp).background(hsvColor.value.toColor()))
+}
+```
+
+## Full Usage example
+
+```kotlin
+@Composable
 fun AnyComposableFunction(){
     val hsvColor = remember{ mutableStateOf(HsvColor.DEFAULT)}
     val extractHsvColor = remember{ mutableStateOf(listOf<HsvColor>())}

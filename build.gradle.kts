@@ -10,6 +10,3 @@ buildscript {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.21")
     }
 }
-
-group = "com.honyadew"
-version = "0.1.0"
