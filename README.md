@@ -26,6 +26,12 @@ Add the dependency to your `build.gradle.kts` file:
 implementation("TODO<version>")
 ```
 
+## Screnshots
+
+![Screenshot1v3](https://github.com/HonyaDew/circular-color-picker-compose/assets/116727132/f0def2ea-95fb-43df-b70f-68a4735386b3)
+
+![Screenshot2v3](https://github.com/HonyaDew/circular-color-picker-compose/assets/116727132/90465552-17a8-4a76-850d-83f61439b756)
+
 ## Minimal usage example
 
 ```kotlin
