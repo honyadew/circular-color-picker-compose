@@ -10,3 +10,11 @@ buildscript {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.21")
     }
 }
+allprojects{
+    repositories {
+        mavenCentral()
+        google()
+        maven("https://jitpack.io")
+    }
+}
+
