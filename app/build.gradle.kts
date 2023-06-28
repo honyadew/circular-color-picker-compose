@@ -42,7 +42,6 @@ android {
 
 dependencies {
     implementation(project(mapOf("path" to ":harmony-color-picker")))
-    implementation(project(mapOf("path" to ":harmony-color-picker")))
     val composeVersion = "1.4.3"
 
     implementation("androidx.compose.ui:ui:$composeVersion")
