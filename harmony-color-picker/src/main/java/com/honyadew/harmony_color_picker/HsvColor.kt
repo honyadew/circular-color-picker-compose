@@ -110,8 +110,8 @@ data class HsvColor(
             )
             return HsvColor(
                 hue = hsv[0],
-                saturation = hsv[1] / 100f,
-                value = hsv[2] / 100f,
+                saturation = hsv[1],
+                value = hsv[2],
                 alpha = color.alpha
             )
         }

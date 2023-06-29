@@ -41,7 +41,8 @@ android {
 
 
 dependencies {
-    implementation("com.github.honyadew:circular-color-picker-compose:1.1")
+//    implementation("com.github.honyadew:circular-color-picker-compose:1.1")
+    implementation(project(":harmony-color-picker"))
     val composeVersion = "1.4.3"
 
     implementation("androidx.compose.ui:ui:$composeVersion")
