@@ -101,11 +101,18 @@ data class HsvColor(
 
 
         fun from(color: Color): HsvColor {
+            val hsv = FloatArray(3)
+            android.graphics.Color.RGBToHSV(
+                (color.red * 255).toInt(),
+                (color.green * 255).toInt(),
+                (color.blue * 255).toInt(),
+                hsv
+            )
             return HsvColor(
-                color.red,
-                color.green,
-                color.blue,
-                color.alpha
+                hue = hsv[0],
+                saturation = hsv[1] / 100f,
+                value = hsv[2] / 100f,
+                alpha = color.alpha
             )
         }
 
