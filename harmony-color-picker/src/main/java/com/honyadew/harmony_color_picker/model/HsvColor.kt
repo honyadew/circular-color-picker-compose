@@ -31,7 +31,7 @@ data class HsvColor(
     fun getAnalagousColors(): List<HsvColor> {
         return listOf(
             this.copy(hue = (hue + 30) % 360),
-            this.copy(hue = (hue - 30) % 360)
+            this.copy(hue = (hue + 330) % 360)
         )
     }
 
