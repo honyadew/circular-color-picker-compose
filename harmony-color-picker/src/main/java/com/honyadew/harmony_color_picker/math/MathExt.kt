@@ -1,4 +1,4 @@
-package com.honyadew.harmony_color_picker
+package com.honyadew.harmony_color_picker.math
 
 import kotlin.math.PI
 

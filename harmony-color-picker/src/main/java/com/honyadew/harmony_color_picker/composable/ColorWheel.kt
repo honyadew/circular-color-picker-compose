@@ -1,4 +1,4 @@
-package com.honyadew.harmony_color_picker.harmony
+package com.honyadew.harmony_color_picker.composable
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
-import com.honyadew.harmony_color_picker.HsvColor
+import com.honyadew.harmony_color_picker.model.HsvColor
 
 @Composable
 internal fun ColorWheel(

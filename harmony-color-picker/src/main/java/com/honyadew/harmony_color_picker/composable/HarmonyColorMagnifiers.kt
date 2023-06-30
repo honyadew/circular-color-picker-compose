@@ -1,4 +1,4 @@
-package com.honyadew.harmony_color_picker.harmony
+package com.honyadew.harmony_color_picker.composable
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.Spring
@@ -12,8 +12,9 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntSize
-import com.honyadew.harmony_color_picker.HsvColor
-import com.honyadew.harmony_color_picker.toRadian
+import com.honyadew.harmony_color_picker.model.HsvColor
+import com.honyadew.harmony_color_picker.model.ColorHarmonyMode
+import com.honyadew.harmony_color_picker.math.toRadian
 import kotlin.math.cos
 import kotlin.math.sin
 

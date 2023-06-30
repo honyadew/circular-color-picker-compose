@@ -1,4 +1,4 @@
-package com.honyadew.harmony_color_picker.harmony
+package com.honyadew.harmony_color_picker.composable
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
@@ -14,7 +14,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.honyadew.harmony_color_picker.HsvColor
+import com.honyadew.harmony_color_picker.model.HsvColor
 
 /**
  * Magnifier displayed on top of [position] with the currently selected [color].

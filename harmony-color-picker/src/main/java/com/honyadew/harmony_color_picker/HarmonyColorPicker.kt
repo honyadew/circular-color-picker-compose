@@ -1,39 +1,26 @@
 package com.honyadew.harmony_color_picker
 
-import androidx.compose.foundation.gestures.awaitEachGesture
-import androidx.compose.foundation.gestures.awaitFirstDown
-import androidx.compose.foundation.gestures.drag
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.input.pointer.positionChange
-import androidx.compose.ui.unit.IntSize
-import androidx.compose.ui.unit.dp
-import com.honyadew.harmony_color_picker.harmony.BrightnessBar
-import com.honyadew.harmony_color_picker.harmony.ColorHarmonyMode
-import com.honyadew.harmony_color_picker.harmony.ColorPickerColors
-import com.honyadew.harmony_color_picker.harmony.ColorPickerDefaults
-import com.honyadew.harmony_color_picker.harmony.ColorWheel
-import com.honyadew.harmony_color_picker.harmony.HarmonyColorMagnifiers
-import kotlin.math.atan2
-import kotlin.math.hypot
-import kotlin.math.min
+import com.honyadew.harmony_color_picker.model.ColorHarmonyMode
+import com.honyadew.harmony_color_picker.model.ColorPickerColors
+import com.honyadew.harmony_color_picker.model.ColorPickerDefaults
+import com.honyadew.harmony_color_picker.model.ColorPickerPaddings
+import com.honyadew.harmony_color_picker.composable.HarmonyColorPickerWithMagnifiers
+import com.honyadew.harmony_color_picker.composable.Sliders
+import com.honyadew.harmony_color_picker.math.weightCount
+import com.honyadew.harmony_color_picker.model.HsvColor
+import com.honyadew.harmony_color_picker.model.Positions
+import com.honyadew.harmony_color_picker.model.SliderPosition
+import com.honyadew.harmony_color_picker.model.SlidersStats
 
 
 @Composable
@@ -42,143 +29,64 @@ fun HarmonyColorPicker(
     value: HsvColor,
     onValueChanged: (newValue: HsvColor) -> Unit,
     modifier: Modifier = Modifier,
-    enabled : Boolean = true,
-    showBrightnessBar: Boolean = false,
-    colors: ColorPickerColors = ColorPickerDefaults.harmonyColors()
+    enabled: Boolean = true,
+    brightnessBarPosition: SliderPosition = SliderPosition.DISABLED,
+    alphaBarPosition: SliderPosition = SliderPosition.DISABLED,
+    colors: ColorPickerColors = ColorPickerDefaults.colors(),
+    paddings: ColorPickerPaddings = ColorPickerDefaults.paddings()
 ) {
-    BoxWithConstraints(modifier) {
+    val slidersStats = SlidersStats(
+        brightnessPaddings = paddings.brightnessBarPaddingValues().value,
+        brightnessColor = colors.brightnessBarColor(enabled = enabled).value,
+        alphaPaddings = paddings.alphaBarPaddingValues().value,
+        alphaColor = colors.alphaBarColor(enabled = enabled).value,
+        enabled = enabled
+    )
+
+    val positions = Positions(brightnessBarPosition, alphaBarPosition)
+
+    val updatedColor by rememberUpdatedState(value)
+    val updatedOnValueChanged by rememberUpdatedState(onValueChanged)
+
+    BoxWithConstraints(modifier.padding(paddings.allPaddingValues().value)) {
         Column(
-            Modifier
-                .padding(16.dp)
-                .fillMaxHeight()
-                .fillMaxWidth()
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            val updatedColor by rememberUpdatedState(value)
-            val updatedOnValueChanged by rememberUpdatedState(onValueChanged)
-
-            HarmonyColorPickerWithMagnifiers(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(0.8f),
-                hsvColor = updatedColor,
-                onColorChanged = { newValue ->
-                    updatedOnValueChanged(newValue)
-                },
-                harmonyMode = harmonyMode,
-                colors = colors,
-                enabled = enabled
-            )
-
-            if (showBrightnessBar) {
-                BrightnessBar(
+            val topPositions = positions.copy(selected = SliderPosition.TOP)
+            Column(modifier = Modifier.weight(weightCount(topPositions))){
+                Sliders(topPositions, slidersStats, updatedOnValueChanged, updatedColor)
+            }
+            Row(
+                modifier = Modifier.weight(0.8f),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                val startPosition = positions.copy(selected = SliderPosition.START)
+                Row(modifier = Modifier.weight(weightCount(startPosition))){
+                    Sliders(startPosition, slidersStats, updatedOnValueChanged, updatedColor)
+                }
+                HarmonyColorPickerWithMagnifiers(
                     modifier = Modifier
-                        .padding(top = 16.dp)
-                        .fillMaxWidth()
-                        .weight(0.2f),
-                    onValueChange = { value ->
-                        if (enabled){
-                            updatedOnValueChanged(updatedColor.copy(value = value))
-                        }
+                        .weight(0.8f)
+                        .padding(paddings.wheelPaddingValue().value),
+                    hsvColor = updatedColor,
+                    onColorChanged = { newValue ->
+                        updatedOnValueChanged(newValue)
                     },
-                    currentColor = updatedColor,
-                    color = colors.brightnessBarColor(enabled).value
+                    harmonyMode = harmonyMode,
+                    colors = colors,
+                    enabled = enabled
                 )
-            }
-        }
-    }
-}
-
-@Composable
-private fun HarmonyColorPickerWithMagnifiers(
-    hsvColor: HsvColor,
-    onColorChanged: (HsvColor) -> Unit,
-    harmonyMode: ColorHarmonyMode,
-    colors: ColorPickerColors,
-    enabled: Boolean,
-    modifier: Modifier = Modifier
-) {
-    val hsvColorUpdated by rememberUpdatedState(hsvColor)
-    BoxWithConstraints(
-        modifier = modifier
-            .defaultMinSize(minWidth = 48.dp)
-            .wrapContentSize()
-            .aspectRatio(1f, matchHeightConstraintsFirst = true)
-
-    ) {
-        val updatedOnColorChanged by rememberUpdatedState(onColorChanged)
-        val diameterPx by remember(constraints.maxWidth) {
-            mutableStateOf(constraints.maxWidth)
-        }
-
-        var animateChanges by remember {
-            mutableStateOf(false)
-        }
-        var currentlyChangingInput by remember {
-            mutableStateOf(false)
-        }
-
-        fun updateColorWheel(newPosition: Offset, animate: Boolean) {
-            // Work out if the new position is inside the circle we are drawing, and has a
-            // valid color associated to it. If not, keep the current position
-            val newColor = colorForPosition(newPosition, IntSize(diameterPx, diameterPx), hsvColorUpdated.value)
-            if (newColor != null) {
-                animateChanges = animate
-                updatedOnColorChanged(newColor)
-            }
-        }
-
-        val inputModifier = if (enabled) {
-            Modifier.pointerInput(diameterPx) {
-                awaitEachGesture {
-                    val down = awaitFirstDown(false)
-                    currentlyChangingInput = true
-                    updateColorWheel(down.position, animate = true)
-                    drag(down.id) { change ->
-                        updateColorWheel(change.position, animate = false)
-                        if (change.positionChange() != Offset.Zero) change.consume()
-                    }
-                    currentlyChangingInput = false
+                val endPositions = positions.copy(selected = SliderPosition.END)
+                Row(modifier = Modifier.weight(weightCount(endPositions))){
+                    Sliders(endPositions, slidersStats, updatedOnValueChanged, updatedColor)
                 }
             }
-        } else Modifier
-
-        Box(inputModifier.fillMaxSize()) {
-            ColorWheel(
-                hsvColor = hsvColor,
-                diameter = diameterPx,
-                colors.wheelBorderColor(enabled).value,
-                enabled = enabled
-            )
-            HarmonyColorMagnifiers(
-                diameterPx,
-                hsvColor,
-                animateChanges,
-                currentlyChangingInput,
-                harmonyMode,
-                colors.primaryMagnifierColor(enabled).value,
-                colors.additionalMagnifierColor(enabled).value
-            )
+            val bottomPositions = positions.copy(selected = SliderPosition.BOTTOM)
+            Column(modifier = Modifier.weight(weightCount(bottomPositions))){
+                Sliders(bottomPositions, slidersStats, updatedOnValueChanged, updatedColor)
+            }
         }
-    }
-}
-
-private fun colorForPosition(position: Offset, size: IntSize, value: Float): HsvColor? {
-    val centerX: Double = size.width / 2.0
-    val centerY: Double = size.height / 2.0
-    val radius: Double = min(centerX, centerY)
-    val xOffset: Double = position.x - centerX
-    val yOffset: Double = position.y - centerY
-    val centerOffset = hypot(xOffset, yOffset)
-    val rawAngle = atan2(yOffset, xOffset).toDegree()
-    val centerAngle = (rawAngle + 360.0) % 360.0
-    return if (centerOffset <= radius) {
-        HsvColor(
-            hue = centerAngle.toFloat(),
-            saturation = (centerOffset / radius).toFloat(),
-            value = value,
-            alpha = 1.0f
-        )
-    } else {
-        null
     }
 }

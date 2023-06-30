@@ -1,9 +1,8 @@
-package com.honyadew.harmony_color_picker
+package com.honyadew.harmony_color_picker.model
 
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.ui.graphics.Color
-import com.honyadew.harmony_color_picker.harmony.ColorHarmonyMode
 
 data class HsvColor(
     val hue: Float, // 0..360
@@ -13,20 +12,7 @@ data class HsvColor(
 ) {
 
     fun toColor(): Color {
-        val rgbColor = android.graphics.Color.HSVToColor(
-            floatArrayOf(hue, saturation, value)
-        )
-
-        val red = android.graphics.Color.red(rgbColor) / 255f
-        val green = android.graphics.Color.green(rgbColor) / 255f
-        val blue = android.graphics.Color.blue(rgbColor) / 255f
-
-        return Color(
-            red = red,
-            green = green,
-            blue = blue,
-            alpha = alpha
-        )
+        return Color.hsv(hue, saturation, value, alpha)
     }
 
     fun getComplementaryColor(): List<HsvColor> {
@@ -108,6 +94,7 @@ data class HsvColor(
                 (color.blue * 255).toInt(),
                 hsv
             )
+
             return HsvColor(
                 hue = hsv[0],
                 saturation = hsv[1],

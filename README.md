@@ -96,7 +96,8 @@ fun AnyComposableFunction(){
                 extractHsvColor.value = newValue.getColors(colorHarmonyMode = harmonyMode.value)
             },
             modifier = Modifier.size(384.dp),
-            showBrightnessBar = true,
+            brightnessBarPosition = SliderPosition.START,
+            alphaBarPosition = SliderPosition.BOTTOM,
             enabled = enabled.value,
             colors = ColorPickerDefaults.harmonyColors(wheelBorderColor = Color.Black)
         )
