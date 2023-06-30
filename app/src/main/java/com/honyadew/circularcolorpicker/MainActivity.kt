@@ -1,12 +1,12 @@
 package com.honyadew.circularcolorpicker
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
@@ -21,11 +21,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.honyadew.harmony_color_picker.HsvColor
-import com.honyadew.harmony_color_picker.harmony.ColorHarmonyMode
+import com.honyadew.harmony_color_picker.model.HsvColor
+import com.honyadew.harmony_color_picker.model.ColorHarmonyMode
 import com.honyadew.harmony_color_picker.HarmonyColorPicker
 import com.honyadew.circularcolorpicker.ui.theme.CircularColorPickerTheme
-import com.honyadew.harmony_color_picker.harmony.ColorPickerDefaults
+import com.honyadew.harmony_color_picker.model.SliderPosition
+import com.honyadew.harmony_color_picker.model.ColorPickerDefaults
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,9 +62,16 @@ fun HarmonyViewShow(){
                 extractHsvColor.value = newValue.getColors(colorHarmonyMode = harmonyMode.value)
             },
             modifier = Modifier.size(384.dp),
-            showBrightnessBar = true,
+            brightnessBarPosition = SliderPosition.END,
+            alphaBarPosition = SliderPosition.BOTTOM,
             enabled = enabled.value,
-            colors = ColorPickerDefaults.harmonyColors(wheelBorderColor = Color.Black)
+            colors = ColorPickerDefaults.colors(wheelBorderColor = Color.Black),
+            paddings = ColorPickerDefaults.paddings(
+                alphaBarPaddingValues = PaddingValues(top = 124.dp, end = 32.dp),
+                brightnessBarPaddingValues = PaddingValues(end = 150.dp),
+                wheelPaddingValues = PaddingValues(64.dp),
+                allPaddingValues = PaddingValues(64.dp)
+            )
         )
 
         //Logic example
@@ -103,4 +111,3 @@ fun HarmonyViewShow(){
 //        }
 //    )
 }
-

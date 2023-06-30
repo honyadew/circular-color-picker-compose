@@ -62,9 +62,9 @@ afterEvaluate{
             create<MavenPublication>("release") {
 
                 from(components["release"])
-                groupId = "com.github.HonyaDew"
+                groupId = "com.github.honyadew"
                 artifactId = "circular-color-picker-compose"
-                version = "1.1.2"
+                version = "2.0.1"
             }
         }
     }
